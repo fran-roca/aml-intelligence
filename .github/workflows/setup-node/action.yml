@@ -10,8 +10,9 @@ runs:
         cache: 'pnpm'
 
     - name: Install pnpm
-      run: npm install -g pnpm
-      shell: bash
+      uses: pnpm/action-setup@v2
+      with:
+        version: 10.13.1
 
     - name: Install dependencies
       run: pnpm install
