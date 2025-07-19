@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - master
-  workflow_dispatch:
 
 permissions:
   contents: read
@@ -23,10 +22,10 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Set up Node.js and pnpm
-        uses: ./.github/workflows/setup-node
+        uses: ./.github/workflows/setup-node/action.yml
 
       - name: Build app
-        run: pnpm build
+        run: pnpm run build
 
       - name: Export static site
         run: pnpm next export
