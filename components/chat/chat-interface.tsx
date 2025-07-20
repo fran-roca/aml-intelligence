@@ -170,107 +170,116 @@ export function ChatInterface({
             <div className="grid grid-cols-2 gap-0 h-[500px]">
               {/* Messages Section */}
               <div className="border-r border-slate-200">
-                <ScrollArea className="h-full p-4">
-                  <div className="space-y-4">
-                    {messages.map((message) => (
-                      <div
-                        key={message.id}
-                        className={`flex ${message.type === "user" ? "justify-end" : "justify-start"}`}
-                      >
-                        <div
-                          className={`max-w-[90%] rounded-2xl p-3 ${
-                            message.type === "user"
-                              ? "bg-gradient-to-r from-violet-500 to-purple-600 text-white"
-                              : "bg-slate-50 text-slate-900 border border-slate-200"
-                          }`}
-                        >
-                          <p className="text-sm leading-relaxed whitespace-pre-line">{message.content}</p>
+                <ScrollArea className="h-[500px] pt-4 pb-6">
+                  <div className="p-4">
+                    <div className="space-y-4">
+                      {messages.map((message) => (
+                          <div
+                              key={message.id}
+                              className={`flex ${message.type === "user" ? "justify-end" : "justify-start"}`}
+                          >
+                            <div
+                                className={`max-w-[90%] rounded-2xl p-3 break-words ${
+                                    message.type === "user"
+                                        ? "bg-gradient-to-r from-violet-500 to-purple-600 text-white"
+                                        : "bg-slate-50 text-slate-900 border border-slate-200"
+                                }`}
+                            >
+                              <p className="text-sm leading-relaxed whitespace-pre-wrap break-words overflow-wrap-anywhere">
+                                {message.content}
+                              </p>
 
-                          {/* Report Link */}
-                          {message.reportId && (
-                            <div className="mt-3 p-2 bg-emerald-50 rounded-lg border border-emerald-200">
-                              <Button
-                                onClick={() => onOpenReport(message.reportId!)}
-                                variant="ghost"
-                                size="sm"
-                                className="w-full justify-start text-emerald-700 hover:text-emerald-800 hover:bg-emerald-100 h-auto py-2"
-                              >
-                                <FileText className="w-4 h-4 mr-2" />
-                                <span className="text-sm">📊 View Investigation Report</span>
-                                <ExternalLink className="w-3 h-3 ml-auto" />
-                              </Button>
-                            </div>
-                          )}
+                              {/* Report Link */}
+                              {message.reportId && (
+                                  <div className="mt-3 p-2 bg-emerald-50 rounded-lg border border-emerald-200">
+                                    <Button
+                                        onClick={() => onOpenReport(message.reportId!)}
+                                        variant="ghost"
+                                        size="sm"
+                                        className="w-full justify-start text-emerald-700 hover:text-emerald-800 hover:bg-emerald-100 h-auto py-2"
+                                    >
+                                      <FileText className="w-4 h-4 mr-2 flex-shrink-0" />
+                                      <span className="text-sm truncate">📊 View Investigation Report</span>
+                                      <ExternalLink className="w-3 h-3 ml-auto flex-shrink-0" />
+                                    </Button>
+                                  </div>
+                              )}
 
-                          <p className="text-xs opacity-70 mt-2">{message.timestamp.toLocaleTimeString()}</p>
-                        </div>
-                      </div>
-                    ))}
-                    {isLoading && (
-                      <div className="flex justify-start">
-                        <div className="bg-slate-50 border border-slate-200 rounded-2xl p-3">
-                          <div className="flex items-center space-x-2">
-                            <div className="flex space-x-1">
-                              <div className="w-2 h-2 bg-violet-400 rounded-full animate-bounce"></div>
-                              <div
-                                className="w-2 h-2 bg-violet-400 rounded-full animate-bounce"
-                                style={{ animationDelay: "0.1s" }}
-                              ></div>
-                              <div
-                                className="w-2 h-2 bg-violet-400 rounded-full animate-bounce"
-                                style={{ animationDelay: "0.2s" }}
-                              ></div>
+                              <p className="text-xs opacity-70 mt-2">{message.timestamp.toLocaleTimeString()}</p>
                             </div>
-                            <span className="text-sm text-slate-600">Analyzing...</span>
                           </div>
-                        </div>
-                      </div>
-                    )}
+                      ))}
+                      {isLoading && (
+                          <div className="flex justify-start">
+                            <div className="bg-slate-50 border border-slate-200 rounded-2xl p-3">
+                              <div className="flex items-center space-x-2">
+                                <div className="flex space-x-1">
+                                  <div className="w-2 h-2 bg-violet-400 rounded-full animate-bounce"></div>
+                                  <div
+                                      className="w-2 h-2 bg-violet-400 rounded-full animate-bounce"
+                                      style={{ animationDelay: "0.1s" }}
+                                  ></div>
+                                  <div
+                                      className="w-2 h-2 bg-violet-400 rounded-full animate-bounce"
+                                      style={{ animationDelay: "0.2s" }}
+                                  ></div>
+                                </div>
+                                <span className="text-sm text-slate-600">Analyzing...</span>
+                              </div>
+                            </div>
+                          </div>
+                      )}
+                      <div ref={messagesEndRef} />
+                    </div>
                   </div>
-                  <div ref={messagesEndRef} />
                 </ScrollArea>
               </div>
 
               {/* Insights & Controls Section */}
-              <div className="flex flex-col">
-                <div className="flex-1 p-4 bg-slate-50/30">
-                  <h3 className="text-sm font-semibold text-slate-700 mb-3">Investigation Insights</h3>
-                  <div className="space-y-3">
-                    {messages
-                      .slice(-1)[0]
-                      ?.insights?.slice(0, 3)
-                      .map((insight, index) => (
-                        <div key={index} className="flex items-start space-x-2">
-                          <Lightbulb className="w-4 h-4 text-blue-500 mt-0.5 flex-shrink-0" />
-                          <p className="text-xs text-slate-600 leading-relaxed">{insight}</p>
-                        </div>
-                      ))}
+              <div className="flex flex-col h-full">
+                <div className="flex-1 p-4 bg-slate-50/30 flex flex-col justify-between">
+                  <div>
+                    <h3 className="text-sm font-semibold text-slate-700 mb-3">Investigation Insights</h3>
+                    <div className="space-y-3">
+                      {messages
+                          .slice(-1)[0]
+                          ?.insights?.slice(0, 3)
+                          .map((insight, index) => (
+                              <div key={index} className="flex items-start space-x-2">
+                                <Lightbulb className="w-4 h-4 text-blue-500 mt-0.5 flex-shrink-0" />
+                                <p className="text-xs text-slate-600 leading-relaxed">{insight}</p>
+                              </div>
+                          ))}
 
-                    {messages
-                      .slice(-1)[0]
-                      ?.recommendations?.slice(0, 2)
-                      .map((rec, index) => (
-                        <div key={index} className="flex items-start space-x-2">
-                          <Target className="w-4 h-4 text-amber-500 mt-0.5 flex-shrink-0" />
-                          <p className="text-xs text-slate-600 leading-relaxed">{rec}</p>
-                        </div>
-                      ))}
+                      {messages
+                          .slice(-1)[0]
+                          ?.recommendations?.slice(0, 2)
+                          .map((rec, index) => (
+                              <div key={index} className="flex items-start space-x-2">
+                                <Target className="w-4 h-4 text-amber-500 mt-0.5 flex-shrink-0" />
+                                <p className="text-xs text-slate-600 leading-relaxed">{rec}</p>
+                              </div>
+                          ))}
+                    </div>
+                  </div>
+
+                  {/* Legend at bottom - will stick to bottom */}
+                  <div className="pt-3 border-t border-slate-200">
+                    <div className="flex items-center justify-center space-x-4">
+                      <div className="flex items-center space-x-1">
+                        <Lightbulb className="w-3 h-3 text-blue-500" />
+                        <span className="text-xs text-slate-600">Key Insight</span>
+                      </div>
+                      <div className="flex items-center space-x-1">
+                        <Target className="w-3 h-3 text-amber-500" />
+                        <span className="text-xs text-slate-600">Recommendation</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
 
                 {/* Input Section */}
                 <div className="p-4 border-t border-slate-200 space-y-3">
-                  {/* Show Report Generation Button only after 3 user interactions */}
-                  {messages.filter((m) => m.type === "user").length >= 3 && (
-                    <Button
-                      onClick={() => handleQuickQuery("Generate comprehensive investigation report with findings")}
-                      className="w-full bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 shadow-lg shadow-emerald-500/25"
-                      size="sm"
-                    >
-                      <FileText className="w-4 h-4 mr-2" />
-                      Generate Investigation Report
-                    </Button>
-                  )}
 
                   {/* Input Field */}
                   <div className="flex space-x-2">
@@ -326,12 +335,8 @@ export function ChatInterface({
       {chatOpen && !isIntegrated && (
         <div className="fixed inset-0 z-50 flex items-end justify-end p-6">
           <div className="absolute inset-0" onClick={() => onChatOpenChange(false)} />
-          <Card
-            className={`relative bg-white/95 backdrop-blur-xl border-slate-200/60 shadow-2xl transition-all duration-300 ${
-              chatMinimized ? "w-80 h-16" : "w-96 h-[600px]"
-            }`}
-          >
-            <CardHeader className="bg-gradient-to-r from-violet-600 via-purple-600 to-indigo-600 text-white rounded-t-2xl p-4">
+          <Card className="bg-white/95 backdrop-blur-xl border-slate-200/60 shadow-xl shadow-slate-900/5 mb-8 max-h-[38em] max-w-[40em] flex flex-col">
+            <CardHeader className="bg-gradient-to-r from-violet-600 via-purple-600 to-indigo-600 text-white rounded-t-2xl p-4 flex-shrink-0">
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-3">
                   <div className="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center">
@@ -384,7 +389,7 @@ export function ChatInterface({
             </CardHeader>
 
             {!chatMinimized && (
-              <CardContent className="p-0 flex flex-col h-[calc(600px-80px)]">
+              <CardContent className="p-0 flex flex-col h-[calc(38em-5em)]">
                 <ScrollArea className="flex-1 p-4">
                   <div className="space-y-4">
                     {messages.map((message) => (
@@ -500,17 +505,6 @@ export function ChatInterface({
                 {/* Input section */}
                 <div className="flex-shrink-0">
                   <div className="p-4 space-y-3 border-t border-slate-100">
-                    {/* Show Report Generation Button only after 3 user interactions */}
-                    {messages.filter((m) => m.type === "user").length >= 3 && (
-                      <Button
-                        onClick={() => handleQuickQuery("Generate comprehensive investigation report with findings")}
-                        className="w-full bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 shadow-lg shadow-emerald-500/25"
-                        size="sm"
-                      >
-                        <FileText className="w-4 h-4 mr-2" />
-                        Generate Investigation Report
-                      </Button>
-                    )}
 
                     {/* Input Field */}
                     <div className="flex space-x-2">

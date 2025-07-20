@@ -44,6 +44,8 @@ export default function AMLDemoPage() {
     setIsIntegrated(!isIntegrated)
     if (!isIntegrated) {
       setChatOpen(false) // Close floating when switching to integrated
+    } else {
+      setChatOpen(true)
     }
   }
 
@@ -65,25 +67,25 @@ export default function AMLDemoPage() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8 py-8">
         <StatsGrid notifications={notifications} filteredNotifications={filteredNotifications} />
 
-        <ChatInterface
-          messages={messages}
-          onAddMessage={addMessage}
-          onClearChat={clearChat}
-          notifications={notifications}
-          onFilterChange={setFilteredNotifications}
-          onGenerateReport={handleGenerateReport}
-          onOpenReport={openReportFromChat}
-          chatOpen={chatOpen}
-          onChatOpenChange={setChatOpen}
-          isIntegrated={isIntegrated}
-          onToggleIntegrated={handleToggleIntegrated}
-        />
-
         <ClientTable
           filteredNotifications={filteredNotifications}
           onStartNewChat={handleStartNewChat}
           onOpenChat={() => setChatOpen(true)}
           onToggleIntegrated={handleToggleIntegrated}
+        />
+
+        <ChatInterface
+            messages={messages}
+            onAddMessage={addMessage}
+            onClearChat={clearChat}
+            notifications={notifications}
+            onFilterChange={setFilteredNotifications}
+            onGenerateReport={handleGenerateReport}
+            onOpenReport={openReportFromChat}
+            chatOpen={chatOpen}
+            onChatOpenChange={setChatOpen}
+            isIntegrated={isIntegrated}
+            onToggleIntegrated={handleToggleIntegrated}
         />
       </div>
 

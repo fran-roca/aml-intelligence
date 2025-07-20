@@ -17,6 +17,17 @@ export function getContextualQueries(messages: Message[], filteredNotifications:
     ]
   }
 
+  // Advanced investigation queries
+  if (messages.length > 3) {
+    return [
+      "Generate comprehensive investigation report with findings",
+      "Create investigation priority matrix for all cases",
+      "Show me network analysis of connected entities",
+      "What's our total AML exposure across all jurisdictions?",
+      "Identify emerging typologies from recent patterns",
+    ]
+  }
+
   // After showing high-risk clients
   if (lastMessage?.content.includes("high-risk") && hasHighRiskFilter) {
     return [
@@ -54,17 +65,6 @@ export function getContextualQueries(messages: Message[], filteredNotifications:
       "Find other clients using similar branch-hopping patterns",
       "Calculate total structured amounts across all cases",
       "Generate compliance officer briefing summary",
-    ]
-  }
-
-  // Advanced investigation queries
-  if (messages.length > 5) {
-    return [
-      "Generate comprehensive investigation report with findings",
-      "Create investigation priority matrix for all cases",
-      "Show me network analysis of connected entities",
-      "What's our total AML exposure across all jurisdictions?",
-      "Identify emerging typologies from recent patterns",
     ]
   }
 
